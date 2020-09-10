@@ -25,18 +25,6 @@ Web application allowing you to managing your ecommerce store.
 * `Firebase` & `Firestore`,
 * `Stripe API` (work in progress).
 
-### Live preview:
-* Work in progress
-
-### Screenshots
-![ss1](./ss/ss1.png)
-![ss2](./ss/ss2.png)
-![ss3](./ss/ss3.png)
-![ss4](./ss/ss4.png)
-![ss5](./ss/ss5.png)
-![ss6](./ss/ss6.png)
-![ss7](./ss/ss7.png)
-![ss7](./ss/ss8.png)
 
 
 ## Project setup
