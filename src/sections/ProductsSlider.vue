@@ -1,7 +1,6 @@
 <template>
     <div class="products" id="products">
         <div class="container">
-            <ProductCardModal/>
             <h1 class="text-center p-5">{{value}}</h1>
             <div class="row">
 
@@ -41,7 +40,6 @@
 <script>
     import { Carousel, Slide } from 'vue-carousel';
     import { db } from '../firebase';
-    import ProductCardModal from "../components/ProductCardModal";
     import AddToCart from "../components/AddToCart";
     import $ from "jquery";
 
@@ -60,7 +58,6 @@ export default {
         AddToCart,
         Carousel,
         Slide,
-        ProductCardModal,
     },
     firestore(){
         return {

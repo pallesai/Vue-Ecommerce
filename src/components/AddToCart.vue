@@ -1,7 +1,6 @@
 <template>
   <div class="addToCart">
     <button class="btn btn-sm btn-info p-2 mt-2" @click="addToCart">{{ value }}</button>
-
   </div>
 </template>
 

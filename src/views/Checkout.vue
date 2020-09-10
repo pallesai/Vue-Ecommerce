@@ -2,7 +2,6 @@
   <div class="checkout">
     <NavBar/>
     <div class="container mt-5">
-      <ProductCardModal/>
       <div class="row">
         <div class="col-md-6">
           <h4>
@@ -108,7 +107,6 @@
   import NavBar from "../components/NavBar";
   import { mapGetters, mapActions } from 'vuex';
   import firebase, {db} from "../firebase";
-  import ProductCardModal from "../components/ProductCardModal";
   import $ from "jquery";
   import Footer from "../components/Footer";
 
@@ -130,7 +128,6 @@ export default {
   },
   components: {
     Footer,
-    ProductCardModal,
     NavBar
   },
   methods: {

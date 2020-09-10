@@ -14,8 +14,6 @@ var firebaseConfig = {
     measurementId: "G-DKFM1SR1TV"
   };
 
-  console.log("Firebase config ", firebaseConfig);
-
 firebase.initializeApp(firebaseConfig);
 firebase.analytics();
 

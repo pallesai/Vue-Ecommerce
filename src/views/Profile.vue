@@ -145,12 +145,14 @@ export default {
             loading: null,
         }
     },
+
     components: {
         Loading,
     },
+
     firestore () {
         const user = firebase.auth().currentUser;
-        console.log("User ", user);
+        console.log("User ", user, db.collection('profiles'));
         return {
             profile: db.collection('profiles').doc(user.uid)
         }
@@ -193,8 +195,8 @@ export default {
 
         updateProfile () {
             this.loading = true;
-            console.log("Current profile ", this.$firestore);
-            this.$firestore.profile.update(Object.assign({}, this.profile))
+            const user = firebase.auth().currentUser;
+            db.collection('profiles').doc(user.uid).update(Object.assign({}, this.profile))
             .then(() => {
                 this.loading = false;
                 window.Toast.fire({

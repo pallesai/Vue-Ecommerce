@@ -7,7 +7,7 @@ Vue.use(Vuex);
 let cart = window.localStorage.getItem('cart');
 
 const saveData = () => {
-    window.localStorage.setItem('cart', JSON.stringify(this.state.cart));
+    window.localStorage.setItem('cart', JSON.stringify(state.cart));
 };
 
 const state = {
@@ -17,6 +17,7 @@ const state = {
 
 const mutations = {
     [types.ADD_TO_CART]: (state, product) => {
+        console.log("Adding a cart ", product);
         let inc = false;
 
         state.cart = state.cart.map(prod => {
@@ -110,7 +111,7 @@ const getters = {
     totalPrice: (state) => {
         let result = 0;
         state.cart.forEach(product => {
-            result += product.price * product.quantity;
+            result += parseInt(product.price) * product.quantity;
         });
         return result;
     },
