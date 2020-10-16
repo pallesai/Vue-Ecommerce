@@ -7,7 +7,7 @@
           <h4>
             Checkout page
           </h4>
-          <h5 class="mb-4 text-secondary">Total price: ${{totalPrice}}</h5>
+          <h5 class="mb-4 text-secondary">Total price: Rs {{totalPrice}}</h5>
 
           <div v-if="getCart.length == 0">Your shopping cart is empty!</div>
           <div class="card mt-2 customCard" style="width: 40vw;" v-for="product in getCart" :key="product.id">
@@ -21,7 +21,7 @@
                 </div>
                 <div class="col-md-9">
                   <h5 class="card-title" @click="showDetails(product)" style="cursor: pointer">{{product.name}}</h5>
-                  <h6 class="card-subtitle mb-2 text-muted">${{product.price}}</h6>
+                  <h6 class="card-subtitle mb-2 text-muted">Rs {{product.price}}</h6>
                   <p class="card-text">
                     Quantity: <span style="cursor: pointer" class="add-item" @click="decreaseProduct(product)">-</span> {{product.quantity}} <span style="cursor: pointer;" class="add-item" @click="addProduct(product)">+</span>
                   </p>

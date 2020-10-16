@@ -4,7 +4,7 @@
           <li v-for="(product, index) in products" :key="index" class="product">
               <img :src="product.images[0]" alt="" height="200" width="250">
               <router-link to="/product-details">
-                  <h2 class="product-name" @click="addCurrentProduct(product)"> {{ product.name }}</h2>
+                  <h2 class="product-name"> {{ product.name }}</h2>
               </router-link>
               <div class="product-price">
                   <span>Rs {{ product.price }}, 00</span>
@@ -45,11 +45,6 @@ export default {
     },
 
     methods: {
-        addNew () {
-            this.reset();
-            this.modal = 'new';
-            $("#product").modal('show');
-        },
         addProductToCart(product) {
             console.log("Printing produce ", product);
             $('#cartModal').modal('show');
@@ -105,33 +100,10 @@ export default {
             $("#product").modal('show');
         },
 
-        updateProduct () {
-            this.loading = true;
-            this.$firestore.products.doc(this.product.id).update(this.product)
-                .then(() => {
-                    this.loading = false;
-                    this.reset();
-                    this.modal = null;
-                })
-                .catch((err) => {
-                    console.error(err);
-                });
-
-            $("#product").modal('hide');
-            window.Toast.fire({
-                icon: 'success',
-                title: 'Product was updated successfully!'
-            });
-        },
-
         addTag () {
             let tag = this.tag.slice(0,-1);
             this.product.tags.push(tag);
             this.tag = "";
-        },
-
-        deleteTag (index) {
-            this.product.tags.splice(index,1);
         },
 
         uploadImage (event) {
@@ -158,18 +130,6 @@ export default {
             });
         },
 
-        deleteImage (img, index) {
-            let image = firebase.storage().refFromURL(img);
-
-            this.product.images.splice(index,1);
-            image.delete().then(() => {
-                console.log("img deleted");
-            })
-            .catch((err) => {
-                console.log(err);
-            })
-        },
-
         reset () {
             this.product.name = null;
             this.product.description = null;
@@ -178,18 +138,7 @@ export default {
             this.product.tags = [];
             this.product.images = [];
         }
-  },
-    computed: {
-      soldProducts () {
-          let sum = 0;
-          this.orders.forEach(x => {
-              x.order.forEach(product => {
-                  sum += product.quantity;
-              })
-          });
-          return sum;
-      }
-    }
+  }
 
 }
 </script>
