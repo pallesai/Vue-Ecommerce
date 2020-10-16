@@ -12,6 +12,10 @@ import './assets/app.scss';
 import firebase from './firebase';
 import Swal from 'sweetalert2'
 import VueCarousel from 'vue-carousel';
+import BootstrapVue from "bootstrap-vue"
+
+import "bootstrap/dist/css/bootstrap.min.css"
+import "bootstrap-vue/dist/bootstrap-vue.css"
 
 window.$ = window.jQuery = jQuery;
 window.Swal = Swal;
@@ -25,6 +29,8 @@ Vue.use(VueFirestore,{
     key: 'id',
     enumerable: true,
 });
+
+Vue.use(BootstrapVue);
 
 Vue.config.productionTip = false;
 let app = '';

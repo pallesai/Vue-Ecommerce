@@ -26,9 +26,7 @@
                                         <p class="card-text">
                                             Quantity: <span style="cursor: pointer" class="add-item" @click="decreaseProduct(product)">-</span> {{product.quantity}} <span style="cursor: pointer;" class="add-item" @click="addProduct(product)">+</span>
                                         </p>
-                                        <span class="badge badge-pill badge-primary ml-1"
-                                              v-for="(tag,index) in product.tags"
-                                              :key="index">
+                                        <span class="badge badge-pill badge-primary ml-1" v-for="(tag,index) in product.tags" :key="index">
                                             <span>{{tag}}</span>
                                         </span>
                                     </div>

@@ -17,9 +17,7 @@ const state = {
 
 const mutations = {
     [types.ADD_TO_CART]: (state, product) => {
-        console.log("Adding a cart ", product);
         let inc = false;
-
         state.cart = state.cart.map(prod => {
             if(prod.id === product.id){
                 prod.quantity += 1;
@@ -27,10 +25,12 @@ const mutations = {
             }
             return prod;
         });
+
         if (!inc) {
             product.quantity = 1;
             state.cart.push(product);
         }
+
         saveData();
     },
 
@@ -38,14 +38,16 @@ const mutations = {
         let found_idx = null;
 
         for(let i=0; i < state.cart.length; i++){
-            if (state.cart[i].id == product.id) {
+            if (state.cart[i].id === product.id) {
                 found_idx = i;
                 break;
             }
         }
+
         if (found_idx != null) {
             state.cart.splice(found_idx,1);
         }
+
         saveData();
     },
 
@@ -59,7 +61,7 @@ const mutations = {
             return prod;
         });
 
-        if (p){
+        if (p) {
             if (p.quantity < 1) {
                 let idx = state.cart.indexOf(p);
                 state.cart.splice(idx,1);

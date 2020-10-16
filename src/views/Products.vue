@@ -1,175 +1,44 @@
 <template>
-    <div class="products">
-        <Loading v-if="loading" />
-        <div class="container h-100">
-            <div class="intro h-100">
-                <div class="row h-40 justify-content-center align-items-center">
-                    <div class="col-md-6">
-                        <h3>Product Page</h3>
-                        <p>
-                            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nemo explicabo numquam impedit provident error veniam quam quae placeat, dignissimos, amet maiores vitae facilis possimus, ullam blanditiis cum quisquam at sed?
-                        </p>
-                    </div>
-                    <div class="col-md-6">
-                        <img src="/img/svg/analyze.svg" alt="product" class="img-fluid">
-                    </div>
-                </div>
-                <div class="row h-100 justify-content-center align-tems-center">
+  <div>
+      <ul class="listOfProducts">
+          <li v-for="(product, index) in products" :key="index" class="product">
+              <img :src="product.images[0]" alt="" height="200" width="250">
+              <router-link to="/product-details">
+                  <h2 class="product-name" @click="addCurrentProduct(product)"> {{ product.name }}</h2>
+              </router-link>
+              <div class="product-price">
+                  <span>Rs {{ product.price }}, 00</span>
+              </div>
+              <b-button variant="success" :cartIcon="true" @click="addProductToCart(product)">Add to cart</b-button>
+          </li>
+      </ul>
+  </div>
 
-                    <div class="col-md-6">
-                        <div class="card text-white bg-success mb-1 info-card">
-                            <div class="card-header">
-                                <h4 class="card-title">Total products</h4>
-                            </div>
-                            <div class="card-body" style="text-align: center">
-                                <h2 class="font-weight-bold">{{products.length}}</h2>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class="card text-white bg-info mb-1 info-card">
-                            <div class="card-header">
-                                <h4 class="card-title">Sold products</h4>
-                            </div>
-                            <div class="card-body" style="text-align: center">
-                                <h2 class="font-weight-bold">{{soldProducts}}</h2>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="table-responsive">
-                        <button @click="addNew" class="btn btn-sm btn-info float-right mt-2">+ Add product</button>
-                        <table class="table table-hover table-dark mt-5">
-
-                            <thead>
-                                <tr>
-                                    <th scope="col">Name</th>
-                                    <th scope="col">Price</th>
-                                    <th scope="col">Modify</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            <tr v-for="prod in products" :key="prod.id">
-                                <th scope="row" @click="editProduct(prod)" style="cursor:pointer;">{{prod.name}}</th>
-                                <td>${{prod.price}}</td>
-                                <td>
-                                    <i @click="editProduct(prod)" class="fas fa-edit" style="cursor: pointer"></i>
-                                    <i @click="deleteProduct(prod)" class="fas fa-trash ml-2" style="cursor: pointer"></i>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                </div>
-            </div>
-            <!--     Add new product modal       -->
-            <div class="modal fade bd-example-modal-xl" id="product" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-xl" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="editModalLabel">Add new product</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="row w-100">
-                                <div class="col-md-7">
-                                    <label for="name">Product name</label>
-                                    <input type="text" v-model="product.name" class="form-control" id="name" placeholder="Product name">
-                                    <div class="form-group">
-                                        <label for="name">Description</label>
-                                        <vue-editor v-model="product.description"></vue-editor>
-                                    </div>
-                                </div>
-                                <div class="col-md-5">
-                                    <h5>Product Details</h5>
-                                    <hr>
-                                    <label for="price">Price</label>
-                                    <input type="text" v-model="product.price" class="form-control" id="price" placeholder="Price">
-
-                                    <div class="form-group">
-                                        <label for="tags">Product tags</label>
-                                        <input type="text" v-model="tag" @keyup.188="addTag" class="form-control" id="tags" placeholder="Tags">
-                                        <span class="badge badge-pill badge-primary ml-1"
-                                              v-for="(tag,index) in product.tags"
-                                              :key="index">
-                                            <span @dblclick="deleteTag(index)" style="cursor: pointer">{{tag}}</span>
-                                        </span>
-                                    </div>
-<!--                                    <div class="form-group">-->
-<!--                                        <label for="product_image">Product Image</label>-->
-<!--                                        <input type="file" @change="uploadImage" class="form-control"-->
-<!--                                               name="product_image" accept="image/x-png,image/gif,image/jpeg">-->
-<!--                                    </div>-->
-                                    <div class="input-group">
-                                        <div class="custom-file">
-                                            <input @change="uploadImage" type="file" class="custom-file-input" id="inputGroupFile01"
-                                                   aria-describedby="inputGroupFileAddon01">
-                                            <label class="custom-file-label" for="inputGroupFile01">Product Image</label>
-                                        </div>
-                                    </div>
-                                    <div class="form-group d-flex mt-3">
-                                        <div class="p-1" v-for="(image, index) in product.images" :key="index">
-                                            <div class="img-wrapp">
-                                                <img :src="image" alt="" width="80px">
-                                                <span class="delete-img" @click="deleteImage(image,index)">
-                                                    <i class="fas fa-times"></i>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="button" @click="addProduct" class="btn btn-primary" v-if="modal === 'new'">Add</button>
-                            <button type="button" @click="updateProduct" class="btn btn-primary" v-if="modal === 'edit'">Save</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
 </template>
 
 <script>
 import firebase from '../firebase';
 import { db } from '../firebase';
 import $ from 'jquery';
-import { VueEditor } from "vue2-editor";
-import Loading from "@/components/Loading";
 
 export default {
-  name: 'Products',
-  data () {
-      return {
-          product : {
-              name: null,
-              description: null,
-              price: null,
-              tags: [],
-              images: []
-          },
-          loading: false,
-          modal: null,
-          tag: null,
-      }
-  },
-    components: {
-        VueEditor,
-        Loading,
+    name: 'Products',
+    data () {
+        return {
+            product : {
+                name: null,
+                description: null,
+                price: null,
+                tags: [],
+                images: []
+            },
+            loading: false,
+            modal: null,
+            tag: null,
+        }
     },
     firestore () {
-        const user = firebase.auth().currentUser;
-
           return {
-              profile: db.collection('profiles').doc(user.uid),
               products: db.collection('products'),
               orders: db.collection('orders'),
           }
@@ -181,7 +50,11 @@ export default {
             this.modal = 'new';
             $("#product").modal('show');
         },
-
+        addProductToCart(product) {
+            console.log("Printing produce ", product);
+            $('#cartModal').modal('show');
+            this.$store.dispatch('addProduct', product);
+        },
         addProduct () {
             this.loading = true;
             this.$firestore.products.add(this.product)
@@ -317,15 +190,12 @@ export default {
           return sum;
       }
     }
-  
+
 }
 </script>
 
 <style scoped>
 
-    .img-wrapp {
-        position: relative;
-    }
     .img-wrapp span.delete-img{
         position: absolute;
         top: -14px;
@@ -335,14 +205,40 @@ export default {
         cursor: pointer;
     }
 
-    .info-card {
-        transition: transform .3s ease;
-        max-width: 25rem;
-        text-align: center;
-        margin-top: 2rem;
+    .listOfProducts {
+      width: 100%;
+      max-width: 1000px;
+      margin: 0 auto;
+      display: flex;
+      display: -webkit-box;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      padding: 0;
     }
-
-    .info-card:hover {
-        transform: scale(1.02);
+    .product {
+      width: 300px;
+      background-color: #fff;
+      list-style: none;
+      box-sizing: border-box;
+      padding: 1em;
+      margin: 1em 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      border-radius: 7px;
+    }
+    .product-name {
+      font-size: 1.2em;
+      font-weight: normal;
+    }
+    .product-name:hover {
+      cursor: pointer;
+      text-decoration: underline;
+    }
+    .product-price {
+      width: 100%;
+      text-align: center;
+      justify-content: space-between;
+      margin-bottom: .5em;
     }
 </style>

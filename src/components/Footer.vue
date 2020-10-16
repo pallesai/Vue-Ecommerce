@@ -1,7 +1,6 @@
 <template>
-    <div class="container h-100 w-100">
+    <div class="border-top border-dark">
         <div class="row p-5 h-100 justify-content-center align-items-center">
-
             <div class="col-md-8">
                 <h3>Learn More About us</h3>
                 <p>
@@ -21,5 +20,7 @@
 </script>
 
 <style scoped>
-
+.container-test {
+  border: 3px solid red;
+}
 </style>

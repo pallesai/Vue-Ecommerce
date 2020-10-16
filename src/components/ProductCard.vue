@@ -8,13 +8,11 @@
                     </div>
                     <div class="col-md-9">
                         <h5 class="card-title" style="cursor: pointer">{{product.name}}</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">${{product.price}}</h6>
+                        <h6 class="card-subtitle mb-2 text-muted">Rs {{product.price}}</h6>
                         <p class="card-text">
                             Quantity: {{product.quantity}}
                         </p>
-                        <span class="badge badge-pill badge-primary ml-1"
-                              v-for="(tag,index) in product.tags"
-                              :key="index">
+                        <span class="badge badge-pill badge-primary ml-1" v-for="(tag,index) in product.tags" :key="index">
                         <span>{{tag}}</span>
                       </span>
                     </div>
